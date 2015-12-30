@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/../main.css">
+        <title>Shoe Database</title>
+    </head>
+    <body>
+        <div class="container">
+            <h2>{{ shoe.getShoeName }}</h2>
+
+            {% if stores is not empty %}
+            <p>Here are the stores for this shoe:</p>
+            <ul class="list-group">
+                {% for store in stores %}
+                    <li class="list-group-item">{{ store.getStoreName }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+            <h4>Add a store to this shoe:</h4>
+            <div class="form-group">
+                <form action="/add_stores" method="post">
+                    <input type="hidden" name="shoe_id" id ="shoe_id" value="{{ shoe.getId }}">
+                    <label for="store_id">Select a store</label>
+                    <select id="store_id" name="store_id" type="text">
+                        {% for store in all_stores %}
+                            <option value="{{ store.getId }}"> {{ store.getStoreName }}</option>
+                        {% endfor %}
+                    </select>
+                    <button class="btn btn-default" type="submit">Add store</button>
+                </form>
+            </div>
+
+            <h4>Edit this shoe:</h4>
+            <div class="form-group">
+                <form action='/shoes/{{ shoe.getId }}/edit' method='post'>
+                    <label for='shoe_name'>Shoe Name</label>
+                    <input id='shoe_name' name='shoe_name' type='text'>
+
+                    <button class="btn btn-default" type='submit'>Edit Shoe</button>
+
+                    <a href='/shoes/{{ shoe.getId }}/delete'>Delete Shoe</a>
+                </form>
+            </div>
+            <p><a href='/shoes'>Shoes</a></p>
+        </div>
+    </body>
+</html>
